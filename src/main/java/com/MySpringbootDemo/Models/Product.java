@@ -10,8 +10,6 @@ import javax.persistence.Id;
 
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name = "products")
 public class Product {
@@ -31,28 +29,32 @@ public class Product {
 	@Column
 	private int tax;
 	@Column
+	private String product_id;
+	@Column
 	private int Meta_Active;
 	@Column
 	private Date Meta_Modified;
 	@Column
 	private Date Meta_Created;
-	
+
 	public Date getMeta_Created() {
 		return Meta_Created;
 	}
-
-
 
 	public void setMeta_Created(Date meta_Created) {
 		Meta_Created = meta_Created;
 	}
 
-
-
-	public Product() {};
-
-
+	public Product() {
+	};
 	
+	@Override
+	public String toString() {
+		return String.format(
+				"Product [id=%s, name=%s, description=%s, type=%s, price=%s, tax=%s, product_id=%s, Meta_Active=%s, Meta_Modified=%s]",
+				id, name, description, type, price, tax, product_id, Meta_Active, Meta_Modified);
+	}
+
 	public Product(Long id, String name, String description, String type, float price, int tax, int meta_Active,
 			Date meta_Modified) {
 		super();
@@ -130,20 +132,18 @@ public class Product {
 		Meta_Modified = meta_Modified;
 	}
 
-	@Override
-	public String toString() {
-		return String.format(
-				"Product [id=%s, name=%s, description=%s, type=%s, price=%s, tax=%s, Meta_Active=%s, Meta_Modified=%s]",
-				id, name, description, type, price, tax, Meta_Active, Meta_Modified);
+	public String getProduct_id() {
+		return product_id;
 	}
 
+	public void setProduct_id(String product_id) {
+		this.product_id = product_id;
+	}
 
 
 	public Long getProductId() {
 		// TODO Auto-generated method stub
 		return id;
 	}
-	
-	
-	
+
 }
