@@ -28,7 +28,7 @@ import com.MySpringbootDemo.Repositories.ProductDao;
 
 @EnableWebMvc
 @Configuration
-public class SpringbootIn10StepsApplication implements WebMvcConfigurer   {
+public class MySpringbootDemo implements WebMvcConfigurer   {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -52,6 +52,6 @@ public class SpringbootIn10StepsApplication implements WebMvcConfigurer   {
 	ProductDao productDao;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootIn10StepsApplication.class, args);
+		SpringApplication.run(MySpringbootDemo.class, args);
 	}
 }

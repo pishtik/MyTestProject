@@ -27,6 +27,7 @@
 
 		</header>
 <div id="products">
+	<ul id='gridul' class='grid clearfix'>
 		
           
 			<script
@@ -35,14 +36,12 @@
 		$(document).ready(
 				function showGrid() {
 					$.get("http://localhost:8080/ajaxproducts", function(data) {
-					
-					$("#products").append("<ul id='gridul' class='grid clearfix'>");
 						$.each(data, function(i, product) {
 							$("#gridul").append(
 						
 			"<li class='clearfix'><section class='left'>"+
     				    "<img alt='default thumb' class='thumb' src='images/products/grid-default-thumb.png'>"+
-     			        "<h3 class='alwaysOnTop'>"+product.name+"</h3>"+
+     			        "<h3 id='product_name' class='alwaysOnTop'>"+product.name+"</h3>"+
          			    "<span class='meta alwaysOnTop'>"+product.product_id+"</span>"+
     			        "</img>"+
  				   "</section>"+
@@ -52,7 +51,7 @@
     			    "<span class='alwaysOnTopPrice'>"+product.price+"€"+"</span>"+
     			    "</a>"+
     			    "<span class='darkview gridviewCl'>"+
-     		      	  "<a class='editBtn' href='javascript:void(0);'>"+
+     		      	  "<a class='editbtngridview' href='javascript:void(0);'>"+
             	   			"<img class='grow' alt='Delete' src='images/read-delete-btn.png'/>"+
              	    		"<img class ='grow darkenimg' alt='Edit' src='images/add-to-edit-btn.png'/>"+
          		 	   "</a>"+
@@ -65,7 +64,7 @@
 							);								
 						});
 				});
-				});
+			});
 		
         $(document).on("click", "a#gridview" , function() {
             $("div#showGrid").remove();
