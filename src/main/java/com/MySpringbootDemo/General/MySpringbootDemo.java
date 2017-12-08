@@ -35,9 +35,10 @@ public class MySpringbootDemo implements WebMvcConfigurer   {
 		VersionResourceResolver versionResourceResolver = new VersionResourceResolver()
 				.addVersionStrategy(new ContentVersionStrategy(), "/**");
 
-		registry.addResourceHandler("/javascript/*.js", "/*.css","/images/**")
+		registry.addResourceHandler("/javascript/*.js", "/*.css","/images/**", "/js/**")
 				.addResourceLocations("classpath:/static/")
 				.addResourceLocations("classpath:/static/images/")
+				.addResourceLocations("classpath:/static/js/")
 				.setCachePeriod(1)/*60 * 60 * 24 * 365) one year */
 				.resourceChain(true)
 				.addResolver(versionResourceResolver);

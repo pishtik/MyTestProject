@@ -31,7 +31,7 @@ public class Product {
 	@Column
 	private String product_id;
 	@Column
-	private int Meta_Active;
+	private int metaActive;
 	@Column
 	private Date Meta_Modified;
 	@Column
@@ -52,10 +52,10 @@ public class Product {
 	public String toString() {
 		return String.format(
 				"Product [id=%s, name=%s, description=%s, type=%s, price=%s, tax=%s, product_id=%s, Meta_Active=%s, Meta_Modified=%s]",
-				id, name, description, type, price, tax, product_id, Meta_Active, Meta_Modified);
+				id, name, description, type, price, tax, product_id, metaActive, Meta_Modified);
 	}
 
-	public Product(Long id, String name, String description, String type, float price, int tax, int meta_Active,
+	public Product(Long id, String name, String description, String type, float price, int tax, int metaActive,
 			Date meta_Modified) {
 		super();
 		this.id = id;
@@ -64,7 +64,7 @@ public class Product {
 		this.type = type;
 		this.price = price;
 		this.tax = tax;
-		Meta_Active = meta_Active;
+		metaActive = metaActive;
 		Meta_Modified = meta_Modified;
 	}
 
@@ -116,12 +116,12 @@ public class Product {
 		this.tax = tax;
 	}
 
-	public int getMeta_Active() {
-		return Meta_Active;
+	public int getMetaActive() {
+		return metaActive;
 	}
 
-	public void setMeta_Active(int meta_Active) {
-		Meta_Active = meta_Active;
+	public void setMetaActive(int metaActive) {
+		this.metaActive = metaActive;
 	}
 
 	public Date getMeta_Modified() {

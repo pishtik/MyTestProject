@@ -24,6 +24,8 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 	//public Product findOne(long id);
 	public Product getProductById(Long id);
 	//List<Product> findByName(String name);
+	
+	public List<Product> findByMetaActive(int metaActive);
 
 
 //public Product findOne(Long id);
