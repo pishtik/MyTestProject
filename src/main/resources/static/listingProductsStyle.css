@@ -1,5 +1,13 @@
 * {margin: 0;padding: 0;}
 
+#pricediv{
+	display: inline-block;
+}
+
+#taxdiv{
+	display: inline-block;
+	float: right; 
+}
 .grow {
  transition: transform 0.4s;
  -webkit-transition: -webkit-transform 0.4s;
