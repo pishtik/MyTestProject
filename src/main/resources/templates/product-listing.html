@@ -30,8 +30,8 @@
 
 		</header>
 
-		<ul data-bind="foreach: $data.products" id="products"
-			class="clearfix list">
+		<ul data-bind="foreach: $data.products" id="products" class="clearfix list">
+		<li></li>
 			<li class='clearfix' data-bind="visible: $parent.listView">
 				<section class='left'>
 					<img src='images/products/list-default-thumb.png'
@@ -53,9 +53,29 @@
 				</section>
 			</li>
 			
-			<li data-bind="visible: !$parent.listView()">
-				troll
-			</li>
+			<li class='clearfix' data-bind="visible: !$parent.listView()">
+			 <section class='left'>
+				    <img alt='default thumb' class='thumb' src='images/products/grid-default-thumb.png'>
+ 			        <h3 data-bind="text: $data.name" class='alwaysOnTop'></h3>
+     			    <span class='meta alwaysOnTop' data-bind="text: $data.product_id"></span>
+			        </img>
+			</section>
+
+			<section class='right'>
+					<a class='price'>
+				 	   <span class='alwaysOnTopPrice' data-bind="text: $data.priceText"></span>
+				    </a>
+				    <span class='darkview gridviewCl'>
+	 		      	  <a class='editbtngridview' href='javascript:void(0);'>
+        	   			<img type='button' data-toggle='modal' class='grow' alt='Delete' src='images/read-delete-btn.png'/>
+         	    		<img type='button' data-toggle='modal' data-target='#myModal' class ='grow darkenimg' alt='Edit' src='images/add-to-edit-btn.png'/>
+     		 		   </a>
+     		 	  	 <a class='gridColumn'>
+        	   			 <span class='description' data-bind="text: $data.description"></span>
+     			  	  </a>
+   			 	   </span>
+			 </section>
+		</li>		
 		</ul>
 
 		<div class="bs-example">
