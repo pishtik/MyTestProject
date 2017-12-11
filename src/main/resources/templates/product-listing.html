@@ -7,176 +7,116 @@
 <link rel="shortcut icon" href="http://vandelaydesign.com/favicon.ico">
 <link rel="icon" href="http://vandelaydesign.com/favicon.ico">
 <link rel="stylesheet" type="text/css" href="listingProductsStyle.css">
-<script type="text/javascript"	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type='text/javascript' src='js/knockout-3.4.2.js'></script>
+
 </head>
 
 <body>
 	<div id="wrap">
 		<header>
-			<span class="list-style-buttons"> 
-				<a href="#" id="gridview" class="switcher">
-					<img src="images/grid-view.png" alt="Grid">	
-				</a>
-				<a href="#" id="listview" class="switcher active">
-			  		<img src="images/list-view-active.png" alt="List">
-			  	</a>
+			<span class="list-style-buttons"> <a href="#" id="gridview"
+				class="switcher" data-bind="click: function(){ $data.changeGridView(); }"> <img src="images/grid-view.png" alt="Grid">
+			</a> <a href="#" id="listview" class="switcher active" data-bind="click: function(){ $data.changeListView(); }"> <img
+					src="images/list-view-active.png" alt="List">
+			</a>
 			</span>
 			<h1>Our Products</h1>
 
 		</header>
 
-		<ul id="products" class="clearfix">
-			<script type="text/javascript">
-			function showGrid() {
-				$.get("http://localhost:8080/ajaxproducts", function(data) {
-					$.each(data, function(i, product) {
-						$("#products").append(
-					
-		"<li class='clearfix'><section class='left'>"+
-				    "<img alt='default thumb' class='thumb' src='images/products/grid-default-thumb.png'>"+
- 			        "<h3 id='product_name' class='alwaysOnTop'>"+product.name+"</h3>"+
-     			    "<span class='meta alwaysOnTop'>"+product.product_id+"</span>"+
-			        "</img>"+
-				   "</section>"+
+		<ul data-bind="foreach: $data.products" id="products"
+			class="clearfix list">
+			<li class='clearfix' data-bind="visible: $parent.listView">
+				<section class='left'>
+					<img src='images/products/list-default-thumb.png'
+						alt='default thumb' class='thumb'>
+					<h3 data-bind="text: $data.name"></h3>
+					<span class='meta' data-bind="text: $data.product_id"></span> <br
+						class='description'>
+					<span class='description' data-bind="text: $data.description"></span>
+				</section>
 
-				  "<section class='right'>"+
-					"<a class='price'>"+
-			    "<span class='alwaysOnTopPrice'>"+product.price+"€"+"</span>"+
-			    "</a>"+
-			    "<span class='darkview gridviewCl'>"+
- 		      	  "<a class='editbtngridview' href='javascript:void(0);'>"+
-        	   			"<img type='button' data-toggle='modal' class='grow' alt='Delete' src='images/read-delete-btn.png'/>"+
-         	    		"<img type='button' data-toggle='modal' data-target='#myModal' class ='grow darkenimg' alt='Edit' src='images/add-to-edit-btn.png'/>"+
-     		 	   "</a>"+
-     		 	   "<a class='gridColumn'>"+
-        	   			 "<span class='description'>"+product.description+"</span>"+
-     			    "</a>"+
-   			    "</span>"+
-			 "</section>"+
-		"</li>"		
-						);								
-					});
-			});
-		};
-		
-				  function showlist() {
-					$.get("http://localhost:8080/ajaxproducts", function(data) {
-					
-						$.each(data, function(i, product) {
-							$("#products").append(
-									
-					"<li id="+product.id+" class='clearfix'>"+
-						"<section class='left'>"+
-							"<img src='images/products/list-default-thumb.png' alt='default thumb' class='thumb'>"+
-							"<h3 >"+product.name+"</h3>"+
-							"<span class='meta'>"+product.product_id+"</span>"+
-							"<br class='description'><span class='description'>"+product.description+"</span>"+
-						"</section>"+
-						
-						"<section class='right'>"+
-							"<span class='darkview'>"+
-							"<a data-toggle='modal' data-target='#myModal' class='editBtn'>"+
-							"<img class ='grow' src='images/add-to-edit-btn.png' alt='Edit'></a>"+
-							"<a  class='xBtn'><img class='grow' src='images/read-delete-btn.png' alt='Delete'></a>"+
-							"<span class='price'>"+product.price+"€</span>"+
-							"</span>"+
-						"</section>"+
-					"</li>"
-							);								
-						});
-				});
-				  };
-					
-		$(document).ready(function() {
-			  $( "#products" ).empty();
-			  showlist();
-			  $( "#products" ).removeClass( "grid" );
-			  $( "#products" ).addClass( "list" );
+				<section class='right'>
+					<span class='darkview'> <a data-toggle='modal'
+						data-target='#myModal' class='editBtn' data-bind="click: function(){ $parent.editItem($data); }"> <img class='grow'
+							src='images/add-to-edit-btn.png' alt='Edit'></a> <a
+						class='xBtn'><img class='grow'
+							src='images/read-delete-btn.png' alt='Delete'></a> <span
+						class='price' data-bind="text: $data.priceText"></span>
+					</span>
+				</section>
+			</li>
 			
+			<li data-bind="visible: !$parent.listView()">
+				troll
+			</li>
+		</ul>
+
+		<div class="bs-example">
+
+			<!-- Modal HTML -->
+			<div id="myModal" class="modal fade" data-bind="with: $data.updateableItem">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Modal Window</h4>
+						</div>
+						<div class="modal-body">
+							<form role="form">
+								<div class="form-group">
+									<label for="recipient-name" class="control-label">Product
+										name:</label> <input type="text" class="form-control"
+										id="product-name" data-bind="textInput: $data.name">
+								</div>
+								<div class="form-group">
+									<label for="recipient-name" class="control-label">Product id:</label> 
+									<input data-bind="textInput: $data.product_id" type="text" class="form-control" id="product-id">
+								</div>
+								<div class="form-group" id='pricediv'>
+									<label for="recipient-name" class="control-label">Price:</label>
+									<input type="number" class="form-control" id="price" data-bind="textInput: $data.price">
+								</div>
+								<div class="form-group" id='taxdiv'>
+									<label for="recipient-name" class="control-label">Tax:</label>
+									<input type="number" class="form-control" id="tax" data-bind="textInput: $data.tax">
+								</div>
+								<div class="form-group">
+									<label for="message-text" class="control-label">Description:</label>
+									<textarea class="form-control" data-bind="textInput: $data.description" id="description-text"></textarea>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Cancel</button>
+							<button id='savebtn' type="button" data-dismiss="modal" class="btn btn-primary" data-bind="click: function(){ $parent.saveItem(); }">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer> &nbsp; </footer>
+	</div>
+	<script type='text/javascript'>
+
 			  $('#listview').click(function clicklist(){
-				  $( "#products" ).empty();
-				  showlist();
 				  $( "#products" ).removeClass( "grid" );
 				  $( "#products" ).addClass( "list" );
 			 		 });
 			  $('#gridview').click(function clickgrid(){
-				  $( "#products" ).empty();
-				  showGrid();
 				  $( "#products" ).removeClass( "list" );
 				  $( "#products" ).addClass( "grid" );
 		 		 });
-			  $('a.editBtn').click(function() {
-			        var val = $(this).val();
-			        $('#input_' + val).val(val);
-				  });
-		});
-		
-		 $("#savebtn").click(function () {
-		        $.ajax({
-		            type: "POST",
-		            url: "http://localhost:8080/saveproduct",
-		            data: "{name: '" + $("#txtName").val() + "'}",
-		            contentType: "application/json; charset=utf-8",
-		            dataType: "json",
-		            success: function (r) {
-		                $("#dialog").html(r.d);
-		                $("#dialog").dialog("open");
-		            }
-		        });
-		    });
-		 
-	</script>
-
-		</ul>
-
-
-<div class="bs-example">
-    
-    <!-- Modal HTML -->
-    <div id="myModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Modal Window</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">Product name:</label>
-                            <input type="text" class="form-control" id="product-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">Product id:</label>
-                            <input type="text" class="form-control" id="product-id">
-                        </div>
-                        <div class="form-group" id='pricediv'>
-                            <label for="recipient-name" class="control-label">Price:</label>
-                            <input type="number" class="form-control" id="price">
-                        </div>
-                        <div class="form-group" id='taxdiv'>
-                            <label for="recipient-name" class="control-label">Tax:</label>
-                            <input type="number" class="form-control" id="tax">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">Description:</label>
-                            <textarea class="form-control" id="description-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button id='savebtn' type="button" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>     
-
-		<footer> &nbsp; </footer>
-	</div>
+			  </script>
+	<script type='text/javascript' src='js/product-listing-KO.js'></script>
 </body>
 </html>

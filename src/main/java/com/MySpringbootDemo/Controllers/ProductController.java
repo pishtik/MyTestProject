@@ -60,7 +60,8 @@ public class ProductController {
 	@RequestMapping(value = "/saveproduct", method = RequestMethod.POST)
 	@ResponseBody
 	public String saveProduct(@RequestBody Product product) {
-		product.setId(0l);
+		System.out.println(product.toString()); 
+		//product.setId(0l);
 		product = productDao.save(product);
 		return product.getProductId().toString();
 	}
