@@ -22,10 +22,15 @@ var Item = function(item){
 };
 
 
+
 var AppViewModel = function() {
     var self = this;
  
-    self.products = ko.observableArray([]);
+    self.products = ko.observableArray([]).extend({ paged: { pageSize: 15 } });
+	self.setPage = function(newPage) {
+		self.products.pageNumber(newPage);
+	};
+	
     self.updateableItem = ko.observable({});
     self.selectedItem = ko.observable({});
     

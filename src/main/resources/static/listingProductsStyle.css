@@ -63,6 +63,8 @@ ul.list li.alt { background: #d7dfe0; }
 
 .gridviewCl{display: grid;}
 
+#gridview{ margin-right: 8px;}
+
 .gridColumn{margin-left: 15px;grid-row: 1;grid-column: 1;overflow: hidden;height: 115px;}
 
 a.editBtn{
@@ -73,6 +75,14 @@ a.editBtn{
     grid-column: 2;
 }
 
+pre {
+  white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
 a.editbtngridview{
     display: flex;
     flex-flow: column;
@@ -81,7 +91,7 @@ a.editbtngridview{
     grid-column: 2;
 }
 
-#product_name{    
+.product_name{    
 	white-space: nowrap;
     text-overflow: ellipsis;
     /* width: 100px; */

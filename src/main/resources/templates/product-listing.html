@@ -8,30 +8,29 @@
 <link rel="icon" href="http://vandelaydesign.com/favicon.ico">
 <link rel="stylesheet" type="text/css" href="listingProductsStyle.css">
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type='text/javascript' src='js/knockout-3.4.2.js'></script>
+<script type='text/javascript' src='js/product-listing-knockout-paging.js'></script>
 
 </head>
 
 <body>
 	<div id="wrap">
 		<header>
-			<span class="list-style-buttons"> <a href="#" id="gridview"
-				class="switcher" data-bind="click: function(){ $data.changeGridView(); }"> <img src="images/grid-view.png" alt="Grid">
-			</a> <a href="#" id="listview" class="switcher active" data-bind="click: function(){ $data.changeListView(); }"> <img
-					src="images/list-view-active.png" alt="List">
+			<span class="list-style-buttons">
+			 <a  id="gridview"	class="switcher" data-bind="click: function(){ $data.changeGridView(); }"> 
+			 		<img src="images/grid-view.png" alt="Grid">
+			</a> <a  id="listview" class="switcher active" data-bind="click: function(){ $data.changeListView(); }"> 
+		 			<img src="images/list-view-active.png" alt="List">
 			</a>
 			</span>
 			<h1>Our Products</h1>
 
 		</header>
 
-		<ul data-bind="foreach: $data.products" id="products" class="clearfix list">
-		<li></li>
+		<ul data-bind="foreach: $data.products.pageItems" id="products" class="clearfix list">
 			<li class='clearfix' data-bind="visible: $parent.listView">
 				<section class='left'>
 					<img src='images/products/list-default-thumb.png'
@@ -51,12 +50,11 @@
 						class='price' data-bind="text: $data.priceText"></span>
 					</span>
 				</section>
-			</li>
 			
 			<li class='clearfix' data-bind="visible: !$parent.listView()">
 			 <section class='left'>
 				    <img alt='default thumb' class='thumb' src='images/products/grid-default-thumb.png'>
- 			        <h3 data-bind="text: $data.name" class='alwaysOnTop'></h3>
+ 			        <h3  data-bind="text: $data.name" class='product_name alwaysOnTop'></h3>
      			    <span class='meta alwaysOnTop' data-bind="text: $data.product_id"></span>
 			        </img>
 			</section>
@@ -75,8 +73,42 @@
      			  	  </a>
    			 	   </span>
 			 </section>
+			</li>
 		</li>		
 		</ul>
+		<ul class="pagination">
+
+      <li data-bind="css: { disabled: $data.products.isFirstPage() }" class="previous disabled">
+        <a href="#" aria-label="First" data-bind="click: products.toFirstPage">
+          First
+        </a>
+      </li>
+
+      <li data-bind="css: { disabled: !$data.products.hasPreviousPage() }" class="previous disabled">
+        <a href="#" aria-label="Previous" data-bind="click: products.toPreviousPage">
+          Previous
+        </a>
+      </li>
+
+      <!-- ko foreach: $data.products.pages -->
+      <li data-bind="css: { active: $data == $parent.products.pageNumber() }">
+        <a href="#" data-bind="text: $data, click: $parent.products.pageNumber.bind($data)"></a>
+      </li>
+      <!-- /ko -->
+
+      <li data-bind="css: { disabled: ! $data.products.hasNextPage() }" class="next disabled">
+        <a href="#" aria-label="Next" data-bind="click: products.toNextPage">
+          Next
+        </a>
+      </li>
+
+      <li data-bind="css: { disabled: products.isLastPage() }" class="next disabled">
+        <a href="#" aria-label="Last" data-bind="click: products.toLastPage">
+          Last
+        </a>
+      </li>
+ 	 </ul>
+
 
 		<div class="bs-example">
 
