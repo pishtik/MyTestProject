@@ -30,6 +30,7 @@ var AppViewModel = function() {
 	self.setPage = function(newPage) {
 		self.products.pageNumber(newPage);
 	};
+	self.pagesNumberElement = ko.observable(false);
 	
     self.updateableItem = ko.observable({});
     self.selectedItem = ko.observable({});
