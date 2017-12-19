@@ -25,7 +25,14 @@ ul.grid li:hover .alwaysOnTop{
  	color: white;
  	
  	 }
- 	 
+
+div.pageindexblock{
+	text-align: -webkit-center;
+}
+
+span.lastpagenumber{
+	color:black;
+}
 ul.grid li:hover .alwaysOnTopPrice{  
 	position: relative; 
 	z-index: 99; 

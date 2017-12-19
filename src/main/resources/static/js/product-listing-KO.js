@@ -26,7 +26,8 @@ var Item = function(item){
 var AppViewModel = function() {
     var self = this;
  
-    self.products = ko.observableArray([]).extend({ paged: { pageSize: 15 } });
+    self.products = ko.observableArray([]).extend({ paged: { pageSize: 15, pageGenerator: 'sliding'  } });
+    self.products.pageGenerator.windowSize(12);
 	self.setPage = function(newPage) {
 		self.products.pageNumber(newPage);
 	};

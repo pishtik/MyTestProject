@@ -78,7 +78,7 @@
 		</li>		
 		</ul>
 		<!-- paging HTML elements -->
-		<div>
+		<div class="pageindexblock">
 		<ul class="pagination">
 
       <li data-bind="css: { disabled: $data.products.isFirstPage() }" class="previous disabled">
@@ -108,6 +108,7 @@
       <li data-bind="css: { disabled: products.isLastPage() }" class="next disabled">
         <a href="#" class="button_last" aria-label="Last" data-bind="click: products.toLastPage">
           Last
+         <span class="lastpagenumber"> (<span data-bind="text: products.pageCount()"></span>)</span>
         </a>
       </li>
  	 </ul>
