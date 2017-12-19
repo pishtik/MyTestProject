@@ -1081,7 +1081,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: #ba8744;
   text-decoration: none;
 }
 a:hover,
@@ -5855,6 +5855,32 @@ button.close {
     width: 900px;
   }
 }
+
+span.pageamount {
+	box-shadow: rgb(186, 135, 68) 0px 1px 0px 0px;
+	background: linear-gradient(rgb(235, 181, 111) 5%, rgb(204, 145, 69)
+		100%) rgb(235, 181, 111);
+	border-radius: 6px;
+	border: 1px solid rgb(177, 125, 56);
+	display: inline-block;
+	cursor: pointer;
+	color: rgb(255, 255, 255);
+	font-family: arial;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 3px 3px;
+	text-decoration: none;
+	text-shadow: rgb(26, 107, 13) 0px 1px 2px;
+}
+span.pageamount:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #cc9145), color-stop(1, #ebb56f));
+	background:-moz-linear-gradient(top, #cc9145 5%, #ebb56f 100%);
+	background:-webkit-linear-gradient(top, #cc9145 5%, #ebb56f 100%);
+	background:-o-linear-gradient(top, #cc9145 5%, #ebb56f 100%);
+	background:-ms-linear-gradient(top, #cc9145 5%, #ebb56f 100%);
+	background:linear-gradient(to bottom, #cc9145 5%, #ebb56f 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc9145', endColorstr='#ebb56f',GradientType=0);
+	background-color:#cc9145;}
 .tooltip {
   position: absolute;
   z-index: 1070;

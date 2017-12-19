@@ -48,7 +48,7 @@ var AppViewModel = function() {
     
     self.init = function(){
     	
-    	$.get("./ajaxproducts", function(data) {
+    	$.get("./activeproducts", function(data) {
     		console.log(data);
     		
     		data.forEach(function(item){
