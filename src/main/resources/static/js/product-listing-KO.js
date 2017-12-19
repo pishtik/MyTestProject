@@ -26,7 +26,7 @@ var Item = function(item){
 var AppViewModel = function() {
     var self = this;
  
-    self.products = ko.observableArray([]).extend({ paged: { pageSize: 15, pageGenerator: 'sliding'  } });
+    self.products = ko.observableArray([]).extend({ paged: { pageSize: Cookies.get('pageSize') || 15, pageGenerator: 'sliding'  } });
     self.products.pageGenerator.windowSize(12);
 	self.setPage = function(newPage) {
 		self.products.pageNumber(newPage);
@@ -88,6 +88,10 @@ var AppViewModel = function() {
             }
         });
     	
+    };
+    
+    self.setPageSize = function(pageSize){
+    	Cookies.set('pageSize', pageSize);
     };
     
     self.init();

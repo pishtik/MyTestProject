@@ -14,6 +14,8 @@
 <script type='text/javascript' src='js/knockout-3.4.2.js'></script>
 <script type='text/javascript' src='js/product-listing-knockout-paging.js'></script>
 
+<script type='text/javascript' src='js/js.cookie.js'></script>
+
 </head>
 
 <body>
@@ -30,6 +32,7 @@
 			<h1>Our Products</h1>
 
 		</header>
+		
 
 		<ul data-bind="foreach: $data.products.pageItems" id="products" class="clearfix list">
 			<li class='clearfix' data-bind="visible: $parent.listView">
