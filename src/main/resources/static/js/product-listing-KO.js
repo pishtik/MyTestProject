@@ -92,6 +92,7 @@ var AppViewModel = function() {
     
     self.setPageSize = function(pageSize){
     	Cookies.set('pageSize', pageSize);
+    	window.location.reload(true);
     };
     
     self.init();

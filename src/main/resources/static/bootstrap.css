@@ -5856,6 +5856,8 @@ button.close {
   }
 }
 
+
+
 span.pageamount {
 	box-shadow: rgb(186, 135, 68) 0px 1px 0px 0px;
 	background: linear-gradient(rgb(235, 181, 111) 5%, rgb(204, 145, 69)
@@ -5866,7 +5868,7 @@ span.pageamount {
 	cursor: pointer;
 	color: rgb(255, 255, 255);
 	font-family: arial;
-	font-size: 15px;
+	font-size: 12px;
 	font-weight: bold;
 	padding: 3px 3px;
 	text-decoration: none;

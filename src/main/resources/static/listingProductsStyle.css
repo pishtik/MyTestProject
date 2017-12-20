@@ -33,6 +33,10 @@ div.pageindexblock{
 span.lastpagenumber{
 	color:black;
 }
+div.pagingamounticons{
+	float: right;
+	padding-top: 5px;
+	}
 ul.grid li:hover .alwaysOnTopPrice{  
 	position: relative; 
 	z-index: 99; 
@@ -61,9 +65,13 @@ h1 { font-weight: normal; font-size: 1.9em; line-height: 2.0em; color: #545454; 
 
 /** list view **/
 ul.list {list-style: antiquewhite;width: 100%;}
-ul.list li:nth-child(even) {display: block;/* background: #c9d0d1; */padding: 10px 15px;}
-ul.list li:nth-child(odd) {display: block;background: #c9d0d1;padding: 10px 15px;}
 
+.gridproductli:nth-child(odd) {display: block;background: #c9d0d1;padding: 10px 15px;}
+.gridproductli:nth-child(2n+1) {display: block;/* background: #c9d0d1; */padding: 10px 15px;}
+ 
+.listproductli:nth-child(4n+1) {display: block;background: #c9d0d1;padding: 10px 15px;}
+.listproductli:nth-child(2n+1) {display: block;/* background: #c9d0d1; */padding: 10px 15px;}
+ 
 ul.list li.alt { background: #d7dfe0; }
 
 .addedGrid{ margin: 10px; grid-row: 1;}
@@ -73,6 +81,11 @@ ul.list li.alt { background: #d7dfe0; }
 #gridview{ margin-right: 8px;}
 
 .gridColumn{margin-left: 15px;grid-row: 1;grid-column: 1;overflow: hidden;height: 115px;}
+
+.fileinput{
+    width: 190px;
+    float: right;
+    padding: 2px;}
 
 a.editBtn{
     display: inherit;
