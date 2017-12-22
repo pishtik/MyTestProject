@@ -16,6 +16,8 @@
 
 <script type='text/javascript' src='js/js.cookie.js'></script>
 
+
+
 </head>
 
 <body>
@@ -137,14 +139,20 @@
 									<label for="recipient-name" class="control-label">Product name:</label> 
 									<input type="text" class="form-control"	id="product-name" data-bind="textInput: $data.name">
 								</div>
-								<div class="form-group">
-									<span >
-  									  <input class="fileinput btn btn-primary"  type="file">
+								<div class="fileinputdiv form-group">
+									<span class="imginput">
+									  <div id="image-holder"> </div>
+									  <img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="thumb">
+  									  <input id="fileUpload" class="testclass form-control fileinput"  type="file">
 									</span>
 								</div>
-								<div class="form-group">
+								<div class="divinlineblock form-group">
 									<label for="recipient-name" class="control-label">Product id:</label> 
 									<input data-bind="textInput: $data.product_id" type="text" class="form-control" id="product-id">
+								</div>
+								<div class="form-group" id='pricediv'>
+									<label for="recipient-name" class="control-label">Price:</label>
+									<input type="number" class="form-control" id="price" data-bind="textInput: $data.price">
 								</div>
 								<div class="form-group" id='pricediv'>
 									<label for="recipient-name" class="control-label">Price:</label>
@@ -184,5 +192,32 @@
 		 		 });
 			  </script>
 	<script type='text/javascript' src='js/product-listing-KO.js'></script>
+	<script type='text/javascript'>
+	
+	$("#fileUpload").on('change', function () {
+
+        if (typeof (FileReader) != "undefined") {
+
+            var image_holder = $("#image-holder");
+            image_holder.empty();
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image"
+                }).appendTo(image_holder);
+
+            }
+            image_holder.show();
+            reader.readAsDataURL($(this)[0].files[0]);
+        } else {
+            alert("This browser does not support FileReader.");
+        }
+    });
+    
+</script>
+	
+	
 </body>
 </html>

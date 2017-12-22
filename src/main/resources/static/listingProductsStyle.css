@@ -6,7 +6,6 @@
 
 #taxdiv{
 	display: inline-block;
-	float: right; 
 }
 .grow {
  transition: transform 0.4s;
@@ -81,6 +80,33 @@ ul.list li.alt { background: #d7dfe0; }
 #gridview{ margin-right: 8px;}
 
 .gridColumn{margin-left: 15px;grid-row: 1;grid-column: 1;overflow: hidden;height: 115px;}
+
+.fileinputdiv{
+	width: 190px;
+    float: right;
+    display: inline-block;
+    position: relative;
+    top: 19px;
+}
+#product-id, #price, #tax{
+	width: 200px;
+}
+
+.imginput{
+
+}
+
+.imginput img{
+    padding: 10px;
+    width: 190px;
+}
+
+.divinlineblock{
+	display: inline-block;}
+	
+#product-name{
+	
+}
 
 .fileinput{
     width: 190px;
