@@ -19,6 +19,47 @@ var Item = function(item){
 	self.price.subscribe(function(newValue){
 		self.priceText(formatMoney(newValue));
 	});
+	
+    self.image = ko.observable(item.image);
+	self.fileSelect = function (elemet,event) {
+		var files = event.target.files;// FileList object
+		
+		// Loop through the FileList and render image files as thumbnails.
+		for (var i = 0, f; f = files[i]; i++) {
+			
+			// Only process image files.
+			if (!f.type.match('image.*')) {
+				self.image(undefined);
+				console.error("WRONG TYPE");
+				continue;
+			}          
+			
+			var reader = new FileReader();
+			
+			// Closure to capture the file information.
+			reader.onload = (function(theFile) {
+				return function(e) {                             
+					self.image(e.target.result);
+				};                            
+			})(f);
+			// Read in the image file as a data URL.
+			reader.readAsDataURL(f);
+		}
+	};
+	
+	self.canSave = ko.computed(function(){
+		
+		if(!self.name() || !self.price()){
+			return false;
+		}
+		
+		
+		if(self.name() === item.name && Number(self.price()) === item.price){
+			return false;
+		}
+		
+		return true;
+	});
 };
 
 
@@ -33,7 +74,7 @@ var AppViewModel = function() {
 	};
 	self.pagesNumberElement = ko.observable(false);
 	
-    self.updateableItem = ko.observable({});
+    self.updateableItem = ko.observable(undefined);
     self.selectedItem = ko.observable({});
     
     self.listView = ko.observable(true);
@@ -67,7 +108,7 @@ var AppViewModel = function() {
     
     self.saveItem = function(){
     	
-    	var postData = ko.toJSON(self.updateableItem);
+    	var postData = ko.toJSON(self.updateableItem) || {};
     	console.log(postData);
     
     	 $.ajax({
@@ -82,7 +123,7 @@ var AppViewModel = function() {
     			self.selectedItem.name(self.updateableItem().name());
     			//todo ostatne atributy nasetovat
     			
-        		self.updateableItem({});
+        		self.updateableItem(undefined);
         		
         		$("#myModal").hide();
             }
@@ -98,5 +139,7 @@ var AppViewModel = function() {
     self.init();
 };
  
+
+
 var debug = new AppViewModel();
 ko.applyBindings(debug);

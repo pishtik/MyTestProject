@@ -36,9 +36,19 @@ public class Product {
 	private Date Meta_Modified;
 	@Column
 	private Date Meta_Created;
+	@Column
+	private String image;
 
 	public Date getMeta_Created() {
 		return Meta_Created;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public void setMeta_Created(Date meta_Created) {
@@ -52,11 +62,11 @@ public class Product {
 	public String toString() {
 		return String.format(
 				"Product [id=%s, name=%s, description=%s, type=%s, price=%s, tax=%s, product_id=%s, Meta_Active=%s, Meta_Modified=%s]",
-				id, name, description, type, price, tax, product_id, metaActive, Meta_Modified);
+				id, name, description, type, price, tax, product_id, metaActive, Meta_Modified, image);
 	}
 
 	public Product(Long id, String name, String description, String type, float price, int tax, int metaActive,
-			Date meta_Modified) {
+			Date meta_Modified, String image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -64,8 +74,9 @@ public class Product {
 		this.type = type;
 		this.price = price;
 		this.tax = tax;
-		metaActive = metaActive;
-		Meta_Modified = meta_Modified;
+		this.metaActive = metaActive;
+		this.Meta_Modified = meta_Modified;
+		this.image = image;
 	}
 
 	public long getId() {

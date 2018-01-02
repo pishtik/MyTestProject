@@ -141,9 +141,16 @@
 								</div>
 								<div class="fileinputdiv form-group">
 									<span class="imginput">
-									  <div id="image-holder"> </div>
-									  <img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="thumb">
-  									  <input id="fileUpload" class="testclass form-control fileinput"  type="file">
+									     <!-- ko with: $data.image -->
+
+   									     	<img class="thumb" id="image" data-bind = "attr: {'src': $data }"/>
+   									     <!-- /ko --> 
+   									     
+   									     <!-- ko if: !$data.image() -->
+									  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="thumb">
+									   	 <!-- /ko --> 
+ 
+  									  	<input id="fileUpload" class="testclass form-control fileinput"  type="file" data-bind=" event:{change: $data.fileSelect}">
 									</span>
 								</div>
 								<div class="divinlineblock form-group">
@@ -171,7 +178,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Cancel</button>
-							<button id='savebtn' type="button" data-dismiss="modal" class="btn btn-primary" data-bind="click: function(){ $parent.saveItem(); }">Save</button>
+							<button id='savebtn' type="button" data-dismiss="modal" class="btn btn-primary" data-bind="click: function(){ $parent.saveItem(); }, enable: $data.canSave">Save</button>
 						</div>
 					</div>
 				</div>
@@ -192,31 +199,7 @@
 		 		 });
 			  </script>
 	<script type='text/javascript' src='js/product-listing-KO.js'></script>
-	<script type='text/javascript'>
-	
-	$("#fileUpload").on('change', function () {
 
-        if (typeof (FileReader) != "undefined") {
-
-            var image_holder = $("#image-holder");
-            image_holder.empty();
-
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("<img />", {
-                    "src": e.target.result,
-                    "class": "thumb-image"
-                }).appendTo(image_holder);
-
-            }
-            image_holder.show();
-            reader.readAsDataURL($(this)[0].files[0]);
-        } else {
-            alert("This browser does not support FileReader.");
-        }
-    });
-    
-</script>
 	
 	
 </body>

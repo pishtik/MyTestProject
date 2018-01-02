@@ -62,6 +62,19 @@ public class ProductController {
 	public String saveProduct(@RequestBody Product product) {
 		System.out.println(product.toString()); 
 		//product.setId(0l);
+		
+		
+//		if(!product.getImage().startsWith("/uploads")) {
+//			
+//			//pozriet sa ci existuje obrazok v zlozke /uploads/(product id)/image.jpg
+//			//ak áno rename na /uploads/(product id)/image-old.jpg
+//			//vytvorit obrazok do /uploads/(product id)/image.jpg
+//			
+//		}
+		
+		
+		
+		
 		product = productDao.save(product);
 		return product.getProductId().toString();
 	}
