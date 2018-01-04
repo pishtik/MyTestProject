@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "products")
@@ -36,7 +37,7 @@ public class Product {
 	private Date Meta_Modified;
 	@Column
 	private Date Meta_Created;
-	@Column
+	@Transient
 	private String image;
 
 	public Date getMeta_Created() {

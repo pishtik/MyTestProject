@@ -1,5 +1,14 @@
 package com.MySpringbootDemo.Controllers;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -22,14 +31,16 @@ import com.MySpringbootDemo.Repositories.ProductDao;
 
 @Controller
 public class ProductController {
-	@Inject
-    ResourceUrlProvider resourceUrlProvider;
-
-    @ModelAttribute("urls")
-    public ResourceUrlProvider urls() {
-        return this.resourceUrlProvider;
-    }
+	private static final String IMAGE_UPLOAD_BASE_DIR = "src/main/resources/static/uploads/";
 	
+	@Inject
+	ResourceUrlProvider resourceUrlProvider;
+
+	@ModelAttribute("urls")
+	public ResourceUrlProvider urls() {
+		return this.resourceUrlProvider;
+	}
+
 	@Autowired
 	private ProductDao productDao;
 
@@ -44,7 +55,7 @@ public class ProductController {
 		model.addAttribute("products", productDao.findAll());
 		return "products";
 	}
-	
+
 	@RequestMapping("/product-listing")
 	public String index() {
 		return "product-listing";
@@ -53,30 +64,52 @@ public class ProductController {
 	@RequestMapping(value = "/ajaxproducts", method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> productsList1() {
 		List<Product> products = productDao.findAll();
-		//return products;
+		// return products;
 		return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/saveproduct", method = RequestMethod.POST)
 	@ResponseBody
 	public String saveProduct(@RequestBody Product product) {
-		System.out.println(product.toString()); 
-		//product.setId(0l);
-		
-		
-//		if(!product.getImage().startsWith("/uploads")) {
-//			
-//			//pozriet sa ci existuje obrazok v zlozke /uploads/(product id)/image.jpg
-//			//ak áno rename na /uploads/(product id)/image-old.jpg
-//			//vytvorit obrazok do /uploads/(product id)/image.jpg
-//			
-//		}
-		
-		
-		
-		
+		System.out.println(product.toString());
+		// product.setId(0l);
+
+		if (product.getImage() != null) {
+			Path origFile = Paths.get(IMAGE_UPLOAD_BASE_DIR + product.getId() + "/image.jpg");
+			try {
+				if (fileExists(origFile)) {
+					renameFile(product.getId(), origFile);
+				}
+				createFile(product.getImage(), origFile);
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+
 		product = productDao.save(product);
 		return product.getProductId().toString();
+	}
+
+	private boolean fileExists(Path origFile) {
+		return origFile.toFile().isFile();
+	}
+
+	private void renameFile(long productId, Path origFile) throws IOException {
+		Path renamedFile = Paths.get(IMAGE_UPLOAD_BASE_DIR + productId + "/image-old.jpg");
+		Files.move(origFile, renamedFile, StandardCopyOption.REPLACE_EXISTING);
+	}
+
+	private void createFile(String imageString, Path origFile) throws FileNotFoundException, IOException {
+		String imageDataString = getImageDataString(imageString);
+		byte[] imageByteArray = Base64.getDecoder().decode(imageDataString);
+		origFile.toFile().getParentFile().mkdirs();
+		FileOutputStream imageOutFile = new FileOutputStream(origFile.toFile());
+		imageOutFile.write(imageByteArray);
+		imageOutFile.close();
+	}
+
+	private String getImageDataString(String imageString) {
+		return imageString.substring(imageString.indexOf(",") + 1);
 	}
 
 	@RequestMapping(value = "/hideproduct/{id}", method = RequestMethod.POST)
@@ -86,11 +119,16 @@ public class ProductController {
 		product.setMetaActive(0);
 		productDao.save(product);
 	}
-	
+
 	@RequestMapping(value = "/activeproducts", method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> ActiveProductsList() {
 		List<Product> products = productDao.findByMetaActive(1);
-		//return products;
+		for (Product product : products) {
+			Path file = Paths.get(IMAGE_UPLOAD_BASE_DIR + product.getId() + "/image.jpg");
+			if (file.toFile().exists()) {
+				product.setImage("uploads/" + product.getId() + "/image.jpg");
+			}
+		}
 		return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
 	}
 
