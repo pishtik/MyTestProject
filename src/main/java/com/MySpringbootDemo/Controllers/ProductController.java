@@ -26,12 +26,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.ResourceUrlProvider;
 import javax.inject.Inject;
+
+import com.MySpringbootDemo.General.GlobalProperties;
 import com.MySpringbootDemo.Models.Product;
 import com.MySpringbootDemo.Repositories.ProductDao;
 
 @Controller
 public class ProductController {
-	private static final String IMAGE_UPLOAD_BASE_DIR = "src/main/resources/static/uploads/";
+	@Autowired
+	private GlobalProperties globalProperties;
 	
 	@Inject
 	ResourceUrlProvider resourceUrlProvider;
@@ -75,7 +78,7 @@ public class ProductController {
 		// product.setId(0l);
 
 		if (product.getImage() != null) {
-			Path origFile = Paths.get(IMAGE_UPLOAD_BASE_DIR + product.getId() + "/image.jpg");
+			Path origFile = Paths.get(globalProperties.getImageUploadBaseDir() + product.getId() + "/image.jpg");
 			try {
 				if (fileExists(origFile)) {
 					renameFile(product.getId(), origFile);
@@ -95,7 +98,7 @@ public class ProductController {
 	}
 
 	private void renameFile(long productId, Path origFile) throws IOException {
-		Path renamedFile = Paths.get(IMAGE_UPLOAD_BASE_DIR + productId + "/image-old.jpg");
+		Path renamedFile = Paths.get(globalProperties.getImageUploadBaseDir() + productId + "/image-old.jpg");
 		Files.move(origFile, renamedFile, StandardCopyOption.REPLACE_EXISTING);
 	}
 
@@ -124,7 +127,7 @@ public class ProductController {
 	public ResponseEntity<List<Product>> ActiveProductsList() {
 		List<Product> products = productDao.findByMetaActive(1);
 		for (Product product : products) {
-			Path file = Paths.get(IMAGE_UPLOAD_BASE_DIR + product.getId() + "/image.jpg");
+			Path file = Paths.get(globalProperties.getImageUploadBaseDir() + product.getId() + "/image.jpg");
 			if (file.toFile().exists()) {
 				product.setImage("uploads/" + product.getId() + "/image.jpg");
 			}
