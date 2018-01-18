@@ -12,7 +12,7 @@ var Item = function(item){
 	$.extend(self, item);
 	
 	self.name = ko.observable(item.name);
-	
+	self.image = ko.observable(item.image);
 	self.price = ko.observable(item.price);
 	self.priceText = ko.observable(formatMoney(item.price));
 	
@@ -49,12 +49,12 @@ var Item = function(item){
 	
 	self.canSave = ko.computed(function(){
 		
-		if(!self.name() || !self.price()){
+		if(!self.name() || !self.price() || !self.image()){
 			return false;
 		}
 		
 		
-		if(self.name() === item.name && Number(self.price()) === item.price){
+		if(self.image() === item.image && self.name() === item.name && Number(self.price()) === item.price){
 			return false;
 		}
 		

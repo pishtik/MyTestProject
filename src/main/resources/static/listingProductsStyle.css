@@ -42,7 +42,10 @@ ul.grid li:hover .alwaysOnTopPrice{
  	color: white;
  	-webkit-transition: color 2s;
  	 }
-
+.dftimglist{ 
+	width: 80px;
+	height: 80px;
+}
 
 img.darkenimg{margin-top: 10px;}
 

@@ -44,8 +44,12 @@
 		<ul data-bind="foreach: $data.products.pageItems" id="products" class="clearfix list">
 			<li class='listproductli clearfix' data-bind="visible: $parent.listView">
 				<section class='left'>
-					<img src='images/products/list-default-thumb.png'
-						alt='default thumb' class='thumb'>
+		     <!-- ko with: $data.image -->
+		     	<img class="thumb dftimglist" id="image" data-bind = "attr: {'src': $data }"/>
+		     <!-- /ko --> 
+		     <!-- ko if: !$data.image() -->
+		  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="thumb">
+		   	 <!-- /ko --> 
 					<h3 data-bind="text: $data.name"></h3>
 					<span class='meta' data-bind="text: $data.product_id"></span> <br
 						class='description'>
