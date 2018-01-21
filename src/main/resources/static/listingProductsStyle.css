@@ -47,6 +47,16 @@ ul.grid li:hover .alwaysOnTopPrice{
 	height: 80px;
 }
 
+.img-polaroid {
+    border: 1px solid #ffffff8f;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.img-polaroid:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
 img.darkenimg{margin-top: 10px;}
 
 body {/* background: #000000; */font-size: 62.5%;font-family: Tahoma, Arial, sans-serif;color: #333;padding-bottom: 25px;}

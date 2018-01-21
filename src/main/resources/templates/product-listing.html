@@ -3,9 +3,6 @@
 <head>
 <meta charset="utf-8">
 <title>Grid/List View Switcher Demo - Vandelay Design Blog</title>
-<meta name="author" content="Jake Rocheleau">
-<link rel="shortcut icon" href="http://vandelaydesign.com/favicon.ico">
-<link rel="icon" href="http://vandelaydesign.com/favicon.ico">
 <link rel="stylesheet" type="text/css" href="listingProductsStyle.css">
 <link rel="stylesheet" type="text/css" href="bootstrap.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -45,10 +42,10 @@
 			<li class='listproductli clearfix' data-bind="visible: $parent.listView">
 				<section class='left'>
 		     <!-- ko with: $data.image -->
-		     	<img class="thumb dftimglist" id="image" data-bind = "attr: {'src': $data }"/>
+		     	<img data-toggle="modal" data-target="#ImageModal" class="thumb dftimglist img-polaroid" id="image" data-bind = "attr: {'src': $data }"/>
 		     <!-- /ko --> 
 		     <!-- ko if: !$data.image() -->
-		  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="thumb">
+		  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="img-polaroid thumb">
 		   	 <!-- /ko --> 
 					<h3 data-bind="text: $data.name"></h3>
 					<span class='meta' data-bind="text: $data.product_id"></span> <br
@@ -58,16 +55,21 @@
 
 				<section class='right'>
 					<span class='darkview'> <a href="#" data-toggle='modal'	data-target='#myModal' class='editBtn' data-bind="click: function(){ $parent.editItem($data); }"> 
-					<img href="#" class='grow' src='images/add-to-edit-btn.png' alt='Edit'></a> 
-						<a href="#" class='xBtn'><img class='grow' src='images/read-delete-btn.png' alt='Delete'>
-						</a> <span	class='price' data-bind="text: $data.priceText"></span>
+					<img href="#" class='grow' src='images/add-to-edit-btn.png' alt='Edit' ></a> 
+						<a href="#" class='xBtn'><img class='grow' src='images/read-delete-btn.png' alt='Delete' data-bind="click: function(){ $parent.deleteItem($data.id); }"></a>
+					    <span	class='price' data-bind="text: $data.priceText"></span>
 					</span>
 				</section>
 			</li>		
 			
 			<li class='gridproductli clearfix' data-bind="visible: !$parent.listView()">
 			 <section class='left'>
-				    <img alt='default thumb' class='thumb' src='images/products/grid-default-thumb.png'>
+		    	     <!-- ko with: $data.image -->
+	    			<img class="thumb dftgridimglist img-polaroid" id="image" data-bind = "attr: {'src': $data }"/>
+			   		 <!-- /ko --> 
+			    	 <!-- ko if: !$data.image() -->
+			  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="dftgridimglist thumb img-polaroid">
+	   				 <!-- /ko --> 
  			        <h3  data-bind="text: $data.name" class='product_name alwaysOnTop'></h3>
      			    <span class='meta alwaysOnTop' data-bind="text: $data.product_id"></span>
 			        </img>
@@ -79,8 +81,8 @@
 				    </a>
 				    <span class='darkview gridviewCl'>
 	 		      	  <a class='editbtngridview' href="#">
-        	   			<img type='button' data-toggle='modal' class='grow' alt='Delete' src='images/read-delete-btn.png'/>
-         	    		<img type='button' data-toggle='modal' data-target='#myModal' class ='grow darkenimg' alt='Edit' src='images/add-to-edit-btn.png'/>
+        	   			<img type='button' data-toggle='modal' class='grow' alt='Delete' src='images/read-delete-btn.png' data-bind="click: function(){ $parent.deleteItem($data.id); }"/>
+         	    		<img type='button' data-toggle='modal' data-target='#myModal' class ='grow darkenimg' alt='Edit' src='images/add-to-edit-btn.png' data-bind="click: function(){ $parent.editItem($data); }"/>
      		 		   </a>
      		 	  	 <a class='gridColumn'>
         	   			 <span class='description' data-bind="text: $data.description"></span>
@@ -146,14 +148,11 @@
 								<div class="fileinputdiv form-group">
 									<span class="imginput">
 									     <!-- ko with: $data.image -->
-
-   									     	<img class="thumb" id="image" data-bind = "attr: {'src': $data }"/>
+   									     	<img class="thumb img-polaroid" id="image"  data-bind = "attr: {'src': $data }"/>
    									     <!-- /ko --> 
-   									     
    									     <!-- ko if: !$data.image() -->
 									  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="thumb">
 									   	 <!-- /ko --> 
- 
   									  	<input id="fileUpload" class="testclass form-control fileinput"  type="file" data-bind=" event:{change: $data.fileSelect}">
 									</span>
 								</div>
@@ -175,24 +174,39 @@
 								</div>
 								<div class="form-group">
 									<label for="message-text" class="control-label">Description:</label>
-									<textarea class="form-control" data-bind="textInput: $data.description" id="description-text"></textarea>
+									<textarea cols="40" rows="4" class="form-control" data-bind="textInput: $data.description" id="description-text"></textarea>
 								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Cancel</button>
-							<button id='savebtn' type="button" data-dismiss="modal" class="btn btn-primary" data-bind="click: function(){ $parent.saveItem(); }, enable: $data.canSave">Save</button>
+							<button type="button" class="cancelbutton" data-dismiss="modal">Cancel</button>
+							<button id='savebtn' type="button" data-dismiss="modal" class="pageamountbtn" data-bind="click: function(){ $parent.saveItem(); }, enable: $data.canSave">Save</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
+<!-- Modal Image HTML -->
+		<div id="ImageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-body">
+		            <img id="modalimage"  class="img-responsive">
+		        </div>
+		    </div>
+		  </div>
+		</div>
+		
 		<footer> &nbsp; </footer>
 	</div>
 	<script type='text/javascript'>
-
+			function loadImage() {
+					var img = document.querySelector(".img-polaroid#image");
+					var modalImg = document.getElementById("modalimage");
+				$(img).click(function passimg(){
+				    modalImg.src = this.src;
+				 });
+					 };
 			  $('#listview').click(function clicklist(){
 				  $( "#products" ).removeClass( "grid" );
 				  $( "#products" ).addClass( "list" );
