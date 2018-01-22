@@ -117,10 +117,11 @@ public class ProductController {
 
 	@RequestMapping(value = "/hideproduct/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public void hideProduct(@PathVariable(value = "id") Long id) {
+	public  ResponseEntity<Product> hideProduct(@PathVariable(value = "id") Long id) {
 		Product product = productDao.getProductById(id);
 		product.setMetaActive(0);
 		productDao.save(product);
+		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/activeproducts", method = RequestMethod.GET)

@@ -141,14 +141,11 @@ var AppViewModel = function() {
 			this.click;
 			$.ajax({
 				type : "POST",
-				url : "./hideproduct/" + data,
+				url : "./hideproduct/" + data.id,
 				contentType : "application/json; charset=utf-8",
 				dataType : "json",
 				success : function(data) {
-					console.log(data);
-
-					
-					
+					self.products.remove( function (item) { return item.id === data.id; } );
 				}
 			});
 		} else {
@@ -161,6 +158,12 @@ var AppViewModel = function() {
 	self.setPageSize = function(pageSize) {
 		Cookies.set('pageSize', pageSize);
 		window.location.reload(true);
+	};
+	
+	self.fullsizeimage = ko.observable(undefined);
+	
+	self.showfullsizeimage = function(src){
+		self.fullsizeimage(src);
 	};
 
 	self.init();

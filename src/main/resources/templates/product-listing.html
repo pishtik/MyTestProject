@@ -42,7 +42,7 @@
 			<li class='listproductli clearfix' data-bind="visible: $parent.listView">
 				<section class='left'>
 		     <!-- ko with: $data.image -->
-		     	<img data-toggle="modal" data-target="#ImageModal" class="thumb dftimglist img-polaroid" id="image" data-bind = "attr: {'src': $data }"/>
+		     	<img data-toggle="modal" data-target="#ImageModal" class="thumb dftimglist img-polaroid" id="image" data-bind = "attr: {'src': $data },click: function(){ $parents[1].showfullsizeimage($data); }"/>
 		     <!-- /ko --> 
 		     <!-- ko if: !$data.image() -->
 		  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="img-polaroid thumb">
@@ -56,7 +56,7 @@
 				<section class='right'>
 					<span class='darkview'> <a href="#" data-toggle='modal'	data-target='#myModal' class='editBtn' data-bind="click: function(){ $parent.editItem($data); }"> 
 					<img href="#" class='grow' src='images/add-to-edit-btn.png' alt='Edit' ></a> 
-						<a href="#" class='xBtn'><img class='grow' src='images/read-delete-btn.png' alt='Delete' data-bind="click: function(){ $parent.deleteItem($data.id); }"></a>
+						<a href="#" class='xBtn'><img class='grow' src='images/read-delete-btn.png' alt='Delete' data-bind="click: function(){ $parent.deleteItem($data); }"></a>
 					    <span	class='price' data-bind="text: $data.priceText"></span>
 					</span>
 				</section>
@@ -187,11 +187,11 @@
 			</div>
 		</div>
 <!-- Modal Image HTML -->
-		<div id="ImageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="ImageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bind="with: $data.fullsizeimage">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		        <div class="modal-body">
-		            <img id="modalimage"  class="img-responsive">
+		            <img id="modalimage"  class="img-responsive"  data-bind = "attr: {'src': $data }">
 		        </div>
 		    </div>
 		  </div>
@@ -200,13 +200,7 @@
 		<footer> &nbsp; </footer>
 	</div>
 	<script type='text/javascript'>
-			function loadImage() {
-					var img = document.querySelector(".img-polaroid#image");
-					var modalImg = document.getElementById("modalimage");
-				$(img).click(function passimg(){
-				    modalImg.src = this.src;
-				 });
-					 };
+
 			  $('#listview').click(function clicklist(){
 				  $( "#products" ).removeClass( "grid" );
 				  $( "#products" ).addClass( "list" );
