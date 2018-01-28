@@ -24,16 +24,4 @@ dist/
 nbdist/
 .nb-gradle/
 /.metadata/
-src/main/resources/static/uploads/8/image-old.jpg
-src/main/resources/static/uploads/43/image.jpg
-src/main/resources/static/uploads/43/image-old.jpg
-src/main/resources/static/uploads/42/image.jpg
-src/main/resources/static/uploads/4/image.jpg
-src/main/resources/static/uploads/4/image-old.jpg
-src/main/resources/static/uploads/3/image.jpg
-src/main/resources/static/uploads/3/image-old.jpg
-src/main/resources/static/uploads/25/image.jpg
-src/main/resources/static/uploads/8/image.jpg
-src/main/resources/static/uploads/21/image.jpg
-src/main/resources/static/uploads/17/image.jpg
-src/main/resources/static/uploads/17/image-old.jpg
+src/main/resources/static/uploads/*
