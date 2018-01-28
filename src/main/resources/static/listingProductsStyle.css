@@ -18,6 +18,13 @@
 
 }
 
+.modal-resposive{
+	display: block;
+	max-width: 100%;
+	height: auto;
+	/* width: 1500px; */
+}
+
 ul.grid li:hover .alwaysOnTop{  
 	position: relative; 
 	z-index: 99; 
@@ -43,8 +50,15 @@ ul.grid li:hover .alwaysOnTopPrice{
  	-webkit-transition: color 2s;
  	 }
 .dftimglist{ 
-	width: 80px;
-	height: 80px;
+	width: 90px;
+	height: 90px;
+}
+
+.modal-responsive{
+	display: block;
+    max-width: 100%;
+    height: auto;
+    width: 1500px;
 }
 
 .img-polaroid {

@@ -2,12 +2,14 @@ package com.MySpringbootDemo.Models;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -39,6 +41,7 @@ public class Product {
 	private Date Meta_Created;
 	@Transient
 	private String image;
+	private ProductTax productTax;
 
 	public Date getMeta_Created() {
 		return Meta_Created;
@@ -58,12 +61,23 @@ public class Product {
 
 	public Product() {
 	};
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "tax")
+	public ProductTax getProductTax() {
+		return productTax;
+	}
 	
+	public void ProductTax(ProductTax productTax){
+		this.productTax = productTax;
+	}
+	
+
 	@Override
 	public String toString() {
 		return String.format(
 				"Product [id=%s, name=%s, description=%s, type=%s, price=%s, tax=%s, product_id=%s, Meta_Active=%s, Meta_Modified=%s]",
-				id, name, description, type, price, tax, product_id, metaActive, Meta_Modified, image);
+				id, name, description, type, price, productTax.getTaxName(), product_id, metaActive, Meta_Modified, image);
 	}
 
 	public Product(Long id, String name, String description, String type, float price, int tax, int metaActive,
@@ -151,7 +165,6 @@ public class Product {
 	public void setProduct_id(String product_id) {
 		this.product_id = product_id;
 	}
-
 
 	public Long getProductId() {
 		// TODO Auto-generated method stub

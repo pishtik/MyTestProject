@@ -30,10 +30,10 @@
 			</span>
 			<h1>Our Products</h1>
 			<div class="pagingamounticons">
-			<span class="pageamount" data-bind="click: function(){ setPageSize(15); }  ">15</span>
-			<span class="pageamount" data-bind="click: function(){ setPageSize(30); }  ">30</span>
-			<span class="pageamount" data-bind="click: function(){ setPageSize(90); }  ">90</span>
-			<span class="pageamount" data-bind="click: function(){ setPageSize(180); } ">180</span>
+			<button class="pageamount" data-bind="click: function(){ setPageSize(15); } , css: { pageamountactive: products.pageSize() == 15 }  ">15</button>
+			<button class="pageamount" data-bind="click: function(){ setPageSize(30); }, css: { pageamountactive: products.pageSize() == 30 }  ">30</button>
+			<button class="pageamount" data-bind="click: function(){ setPageSize(90); }, css: { pageamountactive: products.pageSize() == 90 }  ">90</button>
+			<button class="pageamount" data-bind="click: function(){ setPageSize(180); }, css: { pageamountactive: products.pageSize() == 180 } ">180</button>
 			</div>
 		</header>
 		
@@ -42,7 +42,7 @@
 			<li class='listproductli clearfix' data-bind="visible: $parent.listView">
 				<section class='left'>
 		     <!-- ko with: $data.image -->
-		     	<img data-toggle="modal" data-target="#ImageModal" class="thumb dftimglist img-polaroid" id="image" data-bind = "attr: {'src': $data },click: function(){ $parents[1].showfullsizeimage($data); }"/>
+		     	<img data-toggle="modal" style="cursor: pointer" data-target="#ImageModal" class="thumb dftimglist img-polaroid" id="image" data-bind = "attr: {'src': $data },click: function(){ $parents[1].showfullsizeimage($data); }"/>
 		     <!-- /ko --> 
 		     <!-- ko if: !$data.image() -->
 		  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="img-polaroid thumb">
@@ -148,7 +148,7 @@
 								<div class="fileinputdiv form-group">
 									<span class="imginput">
 									     <!-- ko with: $data.image -->
-   									     	<img class="thumb img-polaroid" id="image"  data-bind = "attr: {'src': $data }"/>
+   									     	<img data-toggle="modal" style="cursor: pointer" class="thumb img-polaroid" id="image" data-target="#ImageModal"  data-bind = "attr: {'src': $data },click: function(){ $parents[1].showfullsizeimage($data); }"/>
    									     <!-- /ko --> 
    									     <!-- ko if: !$data.image() -->
 									  		<img src="images/products/list-default-thumb.png" id="image" alt="default thumb" class="thumb">
@@ -188,8 +188,13 @@
 		</div>
 <!-- Modal Image HTML -->
 		<div id="ImageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bind="with: $data.fullsizeimage">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog-responsive">
 		    <div class="modal-content">
+			     <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        			<img aria-hidden="true" src="images/read-delete-btn.png">
+	       			</button>
+	       		</div>
 		        <div class="modal-body">
 		            <img id="modalimage"  class="img-responsive"  data-bind = "attr: {'src': $data }">
 		        </div>
