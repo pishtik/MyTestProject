@@ -1,65 +1,84 @@
 package com.MySpringbootDemo.Models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "producttax")
 public class ProductTax {
-	
-	@Column
-	private Integer TaxId;
-	@Column
-	private String TaxName;
-	@Column
-	private String TaxDescription;
-	private Product product;
-	
-	public ProductTax() {	
-	}
-	
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Integer getId() {
-		return TaxId;
-	}
-	@Column(name = "TaxId")
-	public Integer getTaxId() {
-		return TaxId;
-	}
-
-	public void setTaxId(Integer taxId) {
-		TaxId = taxId;
-	}
-	@Column(name = "TaxName")
-	public String getTaxName() {
-		return TaxName;
-	}
-
-	public void setTaxName(String taxName) {
-		TaxName = taxName;
-	}
-	@Column(name = "TaxDescription")
-	public String getTaxDescription() {
-		return TaxDescription;
-	}
-
-	public void setTaxDescription(String taxDescription) {
-		TaxDescription = taxDescription;
-	}
-
-	@OneToOne(mappedBy = "productTax")
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+	@Column(name= "taxid")
+	private Integer taxid;
+	@Column
+	private String taxname;
+	@Column
+	private String taxdescription;
+	@JsonIgnore
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "productTax")
+	private List<Product> products;
+	
+	public ProductTax(Integer taxid, String taxname, String taxdescription, List<Product> products) {
+		super();
+		this.taxid = taxid;
+		this.taxname = taxname;
+		this.taxdescription = taxdescription;
+		this.products = products;
+	}
+
+	public ProductTax() {
+	}
+
+	public Integer getId() {
+		return this.taxid;
+	}
+
+	public void settaxid(Integer taxid) {
+		this.taxid = taxid;
+	}
+
+	public String gettaxname() {
+		return this.taxname;
+	}
+
+	public void settaxname(String taxname) {
+		this.taxname = taxname;
+	}
+
+	public String gettaxdescription() {
+		return this.taxdescription;
+	}
+
+	public void settaxdescription(String taxdescription) {
+		this.taxdescription = taxdescription;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public Integer gettaxid() {
+		return taxid;
+	}
+
 }

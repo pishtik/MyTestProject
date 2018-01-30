@@ -5,13 +5,20 @@ import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "products")
@@ -29,8 +36,8 @@ public class Product {
 	private String type;
 	@Column
 	private float price;
-	@Column
-	private int tax;
+//	@Column
+//	private int tax;
 	@Column
 	private String product_id;
 	@Column
@@ -41,6 +48,10 @@ public class Product {
 	private Date Meta_Created;
 	@Transient
 	private String image;
+	
+	@ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+	@JoinColumn(name = "tax",referencedColumnName="taxid")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private ProductTax productTax;
 
 	public Date getMeta_Created() {
@@ -62,36 +73,36 @@ public class Product {
 	public Product() {
 	};
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "tax")
-	public ProductTax getProductTax() {
-		return productTax;
-	}
 	
-	public void ProductTax(ProductTax productTax){
-		this.productTax = productTax;
-	}
+//	public ProductTax getProductTax() {
+//		return this.productTax;
+//	}
+//	
+//	public void ProductTax(ProductTax productTax){
+//		this.productTax = productTax;
+//	}
 	
 
 	@Override
 	public String toString() {
 		return String.format(
 				"Product [id=%s, name=%s, description=%s, type=%s, price=%s, tax=%s, product_id=%s, Meta_Active=%s, Meta_Modified=%s]",
-				id, name, description, type, price, productTax.getTaxName(), product_id, metaActive, Meta_Modified, image);
+				id, name, description, type, price, product_id, metaActive, Meta_Modified, image);
 	}
 
 	public Product(Long id, String name, String description, String type, float price, int tax, int metaActive,
-			Date meta_Modified, String image) {
+			Date meta_Modified, String image, ProductTax productTax) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.type = type;
 		this.price = price;
-		this.tax = tax;
+//		this.tax = tax;
 		this.metaActive = metaActive;
 		this.Meta_Modified = meta_Modified;
 		this.image = image;
+		this.productTax = productTax;
 	}
 
 	public long getId() {
@@ -134,16 +145,25 @@ public class Product {
 		this.price = price;
 	}
 
-	public int getTax() {
-		return tax;
-	}
-
-	public void setTax(int tax) {
-		this.tax = tax;
-	}
+//	public int getTax() {
+//		return tax;
+//	}
+//
+//	public void setTax(int tax) {
+//		this.tax = tax;
+//	}
 
 	public int getMetaActive() {
 		return metaActive;
+	}
+
+
+	public ProductTax getProductTax() {
+		return productTax;
+	}
+
+	public void setProductTax(ProductTax productTax) {
+		this.productTax = productTax;
 	}
 
 	public void setMetaActive(int metaActive) {
