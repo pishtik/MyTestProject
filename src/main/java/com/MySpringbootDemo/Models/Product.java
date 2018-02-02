@@ -49,7 +49,7 @@ public class Product {
 	@Transient
 	private String image;
 	
-	@ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "tax",referencedColumnName="taxid")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private ProductTax productTax;

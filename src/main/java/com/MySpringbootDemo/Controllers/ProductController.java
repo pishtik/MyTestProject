@@ -29,7 +29,9 @@ import javax.inject.Inject;
 
 import com.MySpringbootDemo.General.GlobalProperties;
 import com.MySpringbootDemo.Models.Product;
+import com.MySpringbootDemo.Models.ProductTax;
 import com.MySpringbootDemo.Repositories.ProductDao;
+import com.MySpringbootDemo.Repositories.ProductTaxDao;
 
 @Controller
 public class ProductController {
@@ -46,6 +48,8 @@ public class ProductController {
 
 	@Autowired
 	private ProductDao productDao;
+	@Autowired
+	private ProductTaxDao productTaxDao;
 
 	@RequestMapping("/product/{id}")
 	public String getProduct(@PathVariable(value = "id") Long id, Model model) {
@@ -124,6 +128,12 @@ public class ProductController {
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/activetaxtypes", method = RequestMethod.GET)
+	public ResponseEntity<List<ProductTax>> ActiveTaxTypeList() {
+		List<ProductTax> taxTypes = productTaxDao.findByMetaActive(1);
+		return new ResponseEntity<List<ProductTax>>(taxTypes, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/activeproducts", method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> ActiveProductsList() {
 		List<Product> products = productDao.findByMetaActive(1);

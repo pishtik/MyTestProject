@@ -29,17 +29,22 @@ public class ProductTax {
 	private String taxname;
 	@Column
 	private String taxdescription;
+	@Column(name= "metaActive")
+	private Integer metaActive;
+	
+
 	@JsonIgnore
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "productTax")
 	private List<Product> products;
 	
-	public ProductTax(Integer taxid, String taxname, String taxdescription, List<Product> products) {
+	public ProductTax(Integer taxid, String taxname, String taxdescription, List<Product> products, Integer metaActive) {
 		super();
 		this.taxid = taxid;
 		this.taxname = taxname;
 		this.taxdescription = taxdescription;
 		this.products = products;
+		this.metaActive = metaActive;
 	}
 
 	public ProductTax() {
@@ -47,6 +52,14 @@ public class ProductTax {
 
 	public Integer getId() {
 		return this.taxid;
+	}
+	
+	public Integer getmetaActive() {
+		return metaActive;
+	}
+
+	public void setmetaActive(Integer metaActive) {
+		this.metaActive = metaActive;
 	}
 
 	public void settaxid(Integer taxid) {

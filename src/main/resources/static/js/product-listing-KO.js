@@ -13,6 +13,7 @@ var Item = function(item) {
 	self.name = ko.observable(item.name);
 	self.image = ko.observable(item.image);
 	self.price = ko.observable(item.price);
+	self.productTax = ko.observable(item.productTax);
 	self.priceText = ko.observable(formatMoney(item.price));
 
 	self.price.subscribe(function(newValue) {

@@ -10,11 +10,12 @@ import org.springframework.stereotype.Repository;
 
 import com.MySpringbootDemo.Models.Product;
 import com.MySpringbootDemo.Models.ProductTax;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Indenter;
 
 
 @Repository
 @Transactional
-public interface ProductDao extends JpaRepository<Product, Long> {
+public interface ProductTaxDao extends JpaRepository<ProductTax, Integer> {
 
 
   /**
@@ -23,12 +24,12 @@ public interface ProductDao extends JpaRepository<Product, Long> {
    * automagically generated from its signature by Spring Data JPA.
    */
 	//public Product findOne(long id);
-	public Product getProductById(Long id);
+	//public Product getProductById(Long id);
 	//List<Product> findByName(String name);
 	
-	public List<Product> findByMetaActive(int metaActive);
+	//public List<Product> findByMetaActive(int metaActive);
 	
-	//public List<ProductTax> findByMetaActiveTax(int meta_Active);
+	public List<ProductTax> findByMetaActive(int metaActive);
 
 
 //public Product findOne(Long id);
