@@ -36,8 +36,8 @@ public class Product {
 	private String type;
 	@Column
 	private float price;
-//	@Column
-//	private int tax;
+	@Column(name = "tax")
+	private int tax;
 	@Column
 	private String product_id;
 	@Column
@@ -50,7 +50,7 @@ public class Product {
 	private String image;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "tax",referencedColumnName="taxid")
+	@JoinColumn(name = "tax" , insertable=false, updatable=false ,referencedColumnName="taxid")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private ProductTax productTax;
 
@@ -98,7 +98,7 @@ public class Product {
 		this.description = description;
 		this.type = type;
 		this.price = price;
-//		this.tax = tax;
+		this.tax = tax;
 		this.metaActive = metaActive;
 		this.Meta_Modified = meta_Modified;
 		this.image = image;
@@ -145,13 +145,13 @@ public class Product {
 		this.price = price;
 	}
 
-//	public int getTax() {
-//		return tax;
-//	}
-//
-//	public void setTax(int tax) {
-//		this.tax = tax;
-//	}
+	public int getTax() {
+		return tax;
+	}
+
+	public void setTax(int tax) {
+		this.tax = tax;
+	}
 
 	public int getMetaActive() {
 		return metaActive;

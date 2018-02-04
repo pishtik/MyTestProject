@@ -53,8 +53,7 @@ var Item = function(item) {
 			return false;
 		}
 
-		if (self.image() === item.image && self.name() === item.name
-				&& Number(self.price()) === item.price) {
+		if (self.image() === item.image && self.name() === item.name && Number(self.price()) === item.price) {
 			return false;
 		}
 
@@ -161,6 +160,16 @@ var AppViewModel = function() {
 		window.location.reload(true);
 	};
 	
+
+
+	    self.taxRecords = ko.observableArray([]);
+
+	    $.get("/activetaxtypes", function(data) {
+	        self.taxRecords(data);
+	    })
+	
+	
+	
 	self.fullsizeimage = ko.observable(undefined);
 	
 	self.showfullsizeimage = function(src){
@@ -169,6 +178,11 @@ var AppViewModel = function() {
 
 	self.init();
 };
+
+
+
+
+
 
 var debug = new AppViewModel();
 ko.applyBindings(debug);

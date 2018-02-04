@@ -170,7 +170,7 @@
 								</div>
 								<div class="form-group" id='taxdiv'>
 									<label for="recipient-name" class="control-label">Tax:</label>
-									<select  class="form-control" id="tax" data-bind="options: $data.productTax , optionsText: 'taxname' ,value: 'id' "></select>
+									<select  class="form-control" id="tax" data-bind="options: $parent.taxRecords , optionsText: 'taxname' ,value: $data.tax "></select>
 								</div>
 								<div class="form-group">
 									<label for="message-text" class="control-label">Description:</label>
