@@ -1,12 +1,12 @@
 formatMoney = function(value) {
 	if (value) {
-		return value + " €";
+		return value.toFixed(2) + " €";
 	}
 
 	return "- €";
 };
 
-var Item = function(item) {
+var Item = function(item, taxRecords) {
 	var self = this;
 	$.extend(self, item);
 
@@ -15,6 +15,18 @@ var Item = function(item) {
 	self.price = ko.observable(item.price);
 	self.productTax = ko.observable(item.productTax);
 	self.priceText = ko.observable(formatMoney(item.price));
+	
+	var preselectTax;
+	taxRecords.forEach(function(taxRec) {
+		if (taxRec.id == item.productTax.id) {
+			preselectTax = taxRec;
+		}
+	});
+	self.selectedTax = ko.observable(preselectTax);
+	self.selectedTax.subscribe(function(newValue) {
+	    self.tax = newValue.id;
+	});
+
 
 	self.price.subscribe(function(newValue) {
 		self.priceText(formatMoney(newValue));
@@ -49,7 +61,7 @@ var Item = function(item) {
 
 	self.canSave = ko.computed(function() {
 
-		if (!self.name() || !self.price() || !self.image()) {
+		if (!self.name() || !self.price() ) {
 			return false;
 		}
 
@@ -89,13 +101,20 @@ var AppViewModel = function() {
 		self.listView(false);
 	};
 
+
+    self.taxRecords = ko.observableArray([]);
+
+    $.get("/activetaxtypes", function(data) {
+        self.taxRecords(data);
+    })
+	
 	self.init = function() {
 
 		$.get("./activeproducts", function(data) {
 			console.log(data);
 
 			data.forEach(function(item) {
-				self.products.push(new Item(item));
+				self.products.push(new Item(item, self.taxRecords()));
 			});
 
 			console.log(self.products());
@@ -105,11 +124,13 @@ var AppViewModel = function() {
 	self.editItem = function(item) {
 		console.log(item);
 		self.selectedItem = item;
-		self.updateableItem(new Item(ko.toJS(item)));
+		self.updateableItem(new Item(ko.toJS(item), self.taxRecords()));
+		
+		console.log(self.updateableItem().image());
 	};
 
 	self.saveItem = function() {
-
+		self.updateableItem().selectedTax = undefined;
 		var postData = ko.toJSON(self.updateableItem) || {};
 		console.log(postData);
 
@@ -160,14 +181,6 @@ var AppViewModel = function() {
 		window.location.reload(true);
 	};
 	
-
-
-	    self.taxRecords = ko.observableArray([]);
-
-	    $.get("/activetaxtypes", function(data) {
-	        self.taxRecords(data);
-	    })
-	
 	
 	
 	self.fullsizeimage = ko.observable(undefined);
@@ -178,8 +191,6 @@ var AppViewModel = function() {
 
 	self.init();
 };
-
-
 
 
 

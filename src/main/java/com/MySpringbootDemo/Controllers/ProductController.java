@@ -81,7 +81,7 @@ public class ProductController {
 		System.out.println(product.toString());
 		// product.setId(0l);
 
-		if (product.getImage() != null) {
+		if (product.getImage() != null && !product.getImage().startsWith("uploads/")) {
 			Path origFile = Paths.get(globalProperties.getImageUploadBaseDir() + product.getId() + "/image.jpg");
 			try {
 				if (fileExists(origFile)) {

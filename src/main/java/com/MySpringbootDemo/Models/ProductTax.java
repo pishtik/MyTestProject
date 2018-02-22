@@ -29,7 +29,7 @@ public class ProductTax {
 	private String taxname;
 	@Column
 	private String taxdescription;
-	@Column(name= "metaActive")
+	@Column(name= "metaactive")
 	private Integer metaActive;
 	
 

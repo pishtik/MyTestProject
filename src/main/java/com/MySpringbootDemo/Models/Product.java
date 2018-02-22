@@ -35,6 +35,8 @@ public class Product {
 	@Column
 	private String type;
 	@Column
+	private String product_type;
+	@Column
 	private float price;
 	@Column(name = "tax")
 	private int tax;
@@ -73,15 +75,6 @@ public class Product {
 	public Product() {
 	};
 
-	
-//	public ProductTax getProductTax() {
-//		return this.productTax;
-//	}
-//	
-//	public void ProductTax(ProductTax productTax){
-//		this.productTax = productTax;
-//	}
-	
 
 	@Override
 	public String toString() {
